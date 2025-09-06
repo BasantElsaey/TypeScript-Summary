@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeScript Study Guide - Types</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css"> 
+</head>
+<body class="min-h-screen py-10 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto">
+    <header class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-gray-900">TypeScript Study Guide - Types</h1>
+      <p class="text-lg text-gray-600 mt-2">Type system concepts in TypeScript</p>
+      <p class="text-sm text-gray-500">Last updated: September 6, 2025</p>
+    </header>
+    <nav class="nav-bar">
+      <a href="index.html">Basics</a>
+      <a href="functions.html">Functions</a>
+      <a href="types.html">Types</a>
+      <a href="objects-classes.html">Objects & Classes</a>
+      <a href="advanced.html">Advanced</a>
+    </nav>
+    <main>
+      <!-- Type Aliases -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Type Aliases</h2>
+        <p>Type aliases are used to give a name to a type.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>type s = number | string;
+let stringNum: s = 100;
+stringNum = "Basant";
+stringNum = 400;
+console.log(stringNum); // 400
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>s</code> allows numbers or strings, enabling flexible assignments.</p>
+          </div>
+        </div>
+        <div class="code-example">
+          <p><strong>Example: Advanced Type Alias</strong></p>
+          <pre><code>type bug = {
+    name: string,
+    type: string,
+};
+type bug2 = bug & {
+    color: string
+};
+let getBugs = (b: bug2) => {
+    console.log(`My Name is ${b.name}, My Type is ${b.type} and My Color is ${b.color}`);
+};
+getBugs({
+    name: "Error Bug",
+    type: "run time error",
+    color: "red"
+});
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>bug2</code> extends <code>bug</code> with <code>color</code>, requiring all properties.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Literal Types -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Literal Types</h2>
+        <p>Literal types are used to specify a specific value for a variable.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>type nums = -1 | 0 | 1;
+function showNums(num1: number, num2: number): nums {
+    if (num1 === num2) return 0;
+    else if (num1 > num2) return 1;
+    else return -1;
+}
+console.log(showNums(10, 20)); // -1
+console.log(showNums(10, 10)); // 0
+console.log(showNums(40, 30)); // 1
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>nums</code> restricts return values to <code>-1</code>, <code>0</code>, or <code>1</code>.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tuples -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Tuples</h2>
+        <p>Tuples are arrays that have a fixed length with specific types for each element.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>let user: [string, number, boolean] = ["Basant", 20, true];
+user = ["Ahmed", 21, true];
+let [username, age, isActive] = user; // destructuring
+console.log(username); // Ahmed
+console.log(age); // 21
+console.log(isActive); // true
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> The tuple enforces a string, number, and boolean, with destructuring for type-safe access.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Void and Never Types -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Void & Never Types</h2>
+        <p><code>void</code> is used to specify that a function does not return a value but shows <code>undefined</code>. <code>never</code> is used for functions that never return, e.g., due to errors.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>function sayHello(): void {
+    console.log("Hello Basant");
+}
+function showError(): never {
+    throw new Error("Something Went Wrong");
+}
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>sayHello</code> returns nothing, so it’s <code>void</code>. <code>showError</code> throws an error, making it <code>never</code>.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Enums -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Enums</h2>
+        <p>Enums are used to define a set of named constants.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>const RED = 10;
+const BLUE = 20;
+const GREEN = 30;
+enum Color {
+    RED = 1,
+    GREEN = 2,
+    BLUE = 3,
+}
+let color: Color = Color.GREEN;
+console.log(color); // 2
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>Color</code> assigns numeric values, with <code>GREEN</code> as 2.</p>
+          </div>
+        </div>
+        <div class="code-example">
+          <p><strong>Example: Advanced Enums</strong></p>
+          <pre><code>function numberOfAnimalMeals(): number {
+    return 2;
+}
+enum FOOD {
+    MEAT = "meat",
+    FISH = "fish",
+    BANANA = "banana",
+    MILK = "milk"
+}
+enum ANIMAL {
+    CAT = FOOD.MILK,
+    DOG = "dog",
+    MONKEY = numberOfAnimalMeals(),
+    ELEPHANT = "elephant"
+}
+console.log(ANIMAL.CAT); // milk
+console.log(ANIMAL.DOG); // dog
+console.log(ANIMAL.MONKEY); // 2
+console.log(ANIMAL.ELEPHANT); // elephant
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> Enums can have functions, computed members, and heterogeneous values.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Type Assertions -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Type Assertions</h2>
+        <p>Type assertions are used to specify the type of a variable using <code>as</code> or <code>&lt;&gt;</code>.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>let a: any = "Hello";
+let b: any = 1000;
+let c = a as string;
+let d = &lt;number&gt; b;
+console.log(c); // Hello
+console.log(d); // 1000
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> Assertions treat <code>any</code> as a specific type, but should be used cautiously.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Union and Intersection Types -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Union & Intersection Types</h2>
+        <p>Union types allow multiple types; intersection types combine multiple types.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>type A = {
+    one: string,
+    two: number,
+    three: boolean
+};
+type B = A & {
+    four: number
+};
+type C = {
+    five: string
+};
+type mix = A & C;
+function getActions(mixx: mix) {
+    console.log(mixx.one);
+    console.log(mixx.two);
+    console.log(mixx.three);
+    console.log(mixx.five);
+}
+getActions({
+    one: "Onneeeee",
+    two: 222222,
+    three: true,
+    five: "Fiveeeee",
+});
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>mix</code> combines <code>A</code> and <code>C</code>, requiring all properties.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

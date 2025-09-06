@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeScript Study Guide - Advanced</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="min-h-screen py-10 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto">
+    <header class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-gray-900">TypeScript Study Guide - Advanced</h1>
+      <p class="text-lg text-gray-600 mt-2">Advanced TypeScript concepts</p>
+      <p class="text-sm text-gray-500">Last updated: September 6, 2025</p>
+    </header>
+    <nav class="nav-bar">
+      <a href="index.html">Basics</a>
+      <a href="functions.html">Functions</a>
+      <a href="types.html">Types</a>
+      <a href="objects-classes.html">Objects & Classes</a>
+      <a href="advanced.html">Advanced</a>
+    </nav>
+    <main>
+      <!-- Type Inference -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Type Inference</h2>
+        <p>TypeScript infers types when not explicitly declared, reducing boilerplate while maintaining safety.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>let x = 10; // Inferred as number
+let y = "Hello"; // Inferred as string
+// x = "test"; // Error: Type 'string' is not assignable to type 'number'
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> TypeScript infers <code>x</code> as <code>number</code> and <code>y</code> as <code>string</code> based on their initial values, enforcing type safety.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- JSX/TSX Support -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">JSX/TSX Support</h2>
+        <p>TypeScript supports JSX/TSX for React, enabling type-safe components.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>interface Props {
+  name: string;
+}
+const Greeting: React.FC<Props> = ({ name }) => <div>Hello, {name}</div>;
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>Props</code> ensures the <code>Greeting</code> component receives a <code>name</code> string, with TypeScript checking JSX syntax and types.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Type Compatibility -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Type Compatibility</h2>
+        <p>TypeScript uses structural typing, where compatibility is based on structure, not names.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>interface Point {
+  x: number;
+  y: number;
+}
+let p1: Point = { x: 10, y: 20 };
+let p2 = { x: 10, y: 20, z: 30 };
+p1 = p2; // Compatible because p2 has all properties of Point
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>p2</code> is assignable to <code>p1</code> because it has the required <code>x</code> and <code>y</code> properties, ignoring extra properties like <code>z</code>.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Type Queries -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Type Queries</h2>
+        <p>Type queries like <code>keyof</code> and <code>typeof</code> extract types from existing objects or values.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>const user = { name: "Alice", age: 30 };
+type UserKeys = keyof typeof user; // "name" | "age"
+let key: UserKeys = "name"; // Valid
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>keyof typeof user</code> generates a union of <code>user</code>’s property names, restricting <code>key</code> to valid keys.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Symbol Types -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Symbol Types</h2>
+        <p>Symbols provide unique identifiers, often used as object keys.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>const sym = Symbol("id");
+const obj = { [sym]: 123 };
+console.log(obj[sym]); // 123
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>sym</code> is a unique key, ensuring <code>obj[sym]</code> is distinct from other properties.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Iterators and Generators -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Iterators and Generators</h2>
+        <p>Iterators and generators enable custom iteration over data structures.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>function* range(start: number, end: number): IterableIterator<number> {
+  for (let i = start; i <= end; i++) {
+    yield i;
+  }
+}
+const iter = range(1, 3);
+console.log([...iter]); // [1, 2, 3]
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> The generator <code>range</code> yields numbers, allowing iteration with type safety.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Mixins -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Mixins</h2>
+        <p>Mixins combine multiple classes into one, enabling code reuse.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>type Constructor<T> = new (...args: any[]) => T;
+function Timestamped<T extends Constructor<{}>>(Base: T) {
+  return class extends Base {
+    timestamp = Date.now();
+  };
+}
+class User {
+  constructor(public name: string) {}
+}
+const TimestampedUser = Timestamped(User);
+const user = new TimestampedUser("Alice");
+console.log(user.name, user.timestamp);
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>Timestamped</code> adds a <code>timestamp</code> property to any class, applied here to <code>User</code>.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Global Augmentation -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Global Augmentation</h2>
+        <p>Global augmentation extends global interfaces, e.g., adding methods to built-in types.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>declare global {
+  interface Array<T> {
+    last(): T | undefined;
+  }
+}
+Array.prototype.last = function() {
+  return this[this.length - 1];
+};
+const arr = [1, 2, 3];
+console.log(arr.last()); // 3
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> Adds a <code>last</code> method to all arrays, with TypeScript type checking.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Declaration Files -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Declaration Files</h2>
+        <p>Declaration files (<code>.d.ts</code>) provide type definitions for JavaScript code.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>// my-lib.d.ts
+declare function greet(name: string): string;
+// main.ts
+console.log(greet("Alice")); // Type-safe
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>my-lib.d.ts</code> defines types for a JavaScript function, enabling type checking in TypeScript.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Module Resolution -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Module Resolution</h2>
+        <p>TypeScript supports module resolution strategies like <code>node</code> or <code>classic</code> via <code>tsconfig.json</code>.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "baseUrl": "src",
+    "paths": {
+      "@utils/*": ["utils/*"]
+    }
+  }
+}
+// src/utils/math.ts
+export const add = (a: number, b: number) => a + b;
+// src/index.ts
+import { add } from "@utils/math";
+console.log(add(2, 3)); // 5
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>paths</code> maps <code>@utils</code> to the <code>utils</code> directory, simplifying imports.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Namespaces -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Namespaces</h2>
+        <p>Namespaces organize code into logical groups, avoiding global scope pollution.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>namespace MathUtils {
+  export function add(a: number, b: number): number {
+    return a + b;
+  }
+}
+console.log(MathUtils.add(2, 3)); // 5
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>MathUtils</code> groups related functions, with <code>export</code> making them accessible.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Triple-Slash Directives -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Triple-Slash Directives</h2>
+        <p>Triple-slash directives instruct the compiler to include additional files or settings.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>/// <reference path="./types.d.ts" />
+const value: MyType = { id: 1 };
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> The directive includes <code>types.d.ts</code>, making <code>MyType</code> available.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Type-Only Imports/Exports -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Type-Only Imports/Exports</h2>
+        <p>Type-only imports/exports optimize compiled JavaScript by excluding types.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>import type { User } from "./user";
+export type { User };
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>type</code> ensures only type information is imported/exported, reducing runtime code.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Template Literal Types -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Template Literal Types</h2>
+        <p>Template literal types create string types from literals and unions.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>type Color = "red" | "blue";
+type Style = `bg-${Color}`;
+let style: Style = "bg-red"; // Valid
+// let style: Style = "bg-green"; // Error
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>Style</code> restricts values to <code>"bg-red"</code> or <code>"bg-blue"</code>, derived from <code>Color</code>.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Variance Annotations -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Variance Annotations</h2>
+        <p>Variance annotations (<code>in</code>, <code>out</code>) control how generics behave in subtyping.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>interface Reader<out T> {
+  read(): T;
+}
+interface Writer<in T> {
+  write(value: T): void;
+}
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>out</code> makes <code>Reader</code> covariant, allowing subtypes; <code>in</code> makes <code>Writer</code> contravariant, allowing supertypes.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Comprehensive Example -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Comprehensive Example</h2>
+        <p>Combines multiple TypeScript features in a practical example.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>interface User {
+  id: number;
+  name: string;
+}
+type Role = "admin" | "user";
+class UserManager<T extends User> {
+  private users: T[] = [];
+  add(user: T): void {
+    this.users.push(user);
+  }
+  getById(id: number): T | undefined {
+    return this.users.find(u => u.id === id);
+  }
+}
+enum Status { Active, Inactive }
+const manager = new UserManager<{ id: number; name: string; role: Role }>();
+manager.add({ id: 1, name: "Alice", role: "admin" });
+console.log(manager.getById(1)); // { id: 1, name: "Alice", role: "admin" }
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> Uses generics, interfaces, enums, and classes to manage users with type safety.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

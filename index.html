@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeScript Study Guide - Basics</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="min-h-screen py-10 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto">
+    <header class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-gray-900">TypeScript Study Guide - Basics</h1>
+      <p class="text-lg text-gray-600 mt-2">Core TypeScript concepts with examples</p>
+      <p class="text-sm text-gray-500">Last updated: September 6, 2025</p>
+    </header>
+    <nav class="nav-bar">
+      <a href="index.html">Basics</a>
+      <a href="functions.html">Functions</a>
+      <a href="types.html">Types</a>
+      <a href="objects-classes.html">Objects & Classes</a>
+      <a href="advanced.html">Advanced</a>
+    </nav>
+    <main>
+      <!-- What is TypeScript -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">What is TypeScript?</h2>
+        <p>TypeScript is a <strong>typed superset of JavaScript</strong> that adds static types to improve code reliability and scalability. It compiles to plain JavaScript, running anywhere JavaScript runs.</p>
+        <ul class="list-disc pl-6 mt-4">
+          <li><strong>Developed by:</strong> Microsoft</li>
+          <li><strong>Version:</strong> 5.8 (stable), 5.9 (beta)</li>
+          <li><strong>Benefits:</strong> Early error detection, enhanced tooling, scalability, gradual adoption.</li>
+        </ul>
+        <div class="code-example">
+          <p><strong>Example: Early Error Detection</strong></p>
+          <pre><code>const user = { name: "Alice" };
+console.log(user.age); // Error: Property 'age' does not exist
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> TypeScript infers the <code>user</code> object’s shape as <code>{ name: string }</code>. Accessing <code>user.age</code> triggers a compile-time error, preventing runtime issues.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why Use TypeScript -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Why Use TypeScript?</h2>
+        <p>TypeScript enhances JavaScript development by providing compile-time type checking, which catches errors early, improves code quality, and enhances maintainability.</p>
+        <ul class="list-disc pl-6">
+          <li><strong>Error Detection:</strong> Catches issues before runtime.</li>
+          <li><strong>Tooling:</strong> Autocompletion, refactoring, and better IDE support.</li>
+          <li><strong>Scalability:</strong> Used by companies like Slack for large codebases.</li>
+          <li><strong>Compatibility:</strong> Compiles to JavaScript, with types removed for seamless execution.</li>
+          <li><strong>Gradual Adoption:</strong> Can be introduced incrementally in existing JavaScript projects.</li>
+        </ul>
+        <div class="code-example">
+          <p><strong>Example: TypeScript to JavaScript</strong></p>
+          <pre><code>type Result = "pass" | "fail";
+function verify(result: Result) {
+  return result === "pass" ? "Passed" : "Failed";
+}
+// Compiles to:
+function verify(result) {
+  return result === "pass" ? "Passed" : "Failed";
+}
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> The <code>Result</code> type restricts <code>result</code> to <code>"pass"</code> or <code>"fail"</code>. Types are removed during compilation, producing clean JavaScript.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- How to Use TypeScript -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">How to Use TypeScript?</h2>
+        <p>TypeScript can be set up and used with simple commands for installation, compilation, and configuration.</p>
+        <ul class="list-disc pl-6 mt-4">
+          <li><strong>Install:</strong> <code>npm install -g typescript</code></li>
+          <li><strong>Check Version:</strong> <code>tsc --version</code></li>
+          <li><strong>Get Help:</strong> <code>tsc --help</code></li>
+          <li><strong>Compile Single File:</strong> <code>tsc hello.ts</code></li>
+          <li><strong>Watch Mode (Single File):</strong> <code>tsc --watch hello.ts</code></li>
+          <li><strong>Compile Multiple Files:</strong> <code>tsc --watch hello.ts world.ts</code></li>
+          <li><strong>Compile Directories:</strong> <code>tsc --watch hello.ts world.ts src/**/*.ts</code></li>
+          <li><strong>Initialize tsconfig.json:</strong> <code>tsc --init</code></li>
+          <li><strong>Compile with tsconfig.json:</strong> <code>tsc --project tsconfig.json</code></li>
+          <li><strong>Watch with tsconfig.json:</strong> <code>tsc --watch --project tsconfig.json</code></li>
+        </ul>
+        <div class="code-example">
+          <p><strong>Example: tsconfig.json</strong></p>
+          <pre><code>{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "strict": true,
+    "outDir": "./dist",
+    "rootDir": "./src"
+  }
+}
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> Configures the compiler to output ES6 JavaScript, use CommonJS modules, enable strict type-checking, and organize files in <code>dist</code> and <code>src</code> directories.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Static vs Dynamic Type Checking -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Static vs. Dynamic Type Checking</h2>
+        <p><strong>Static Type Checking:</strong> Performed at compile time, catching errors before execution. Improves code quality and maintainability.</p>
+        <p><strong>Dynamic Type Checking:</strong> Performed at runtime, catching errors after code executes.</p>
+        <div class="code-example">
+          <p><strong>Example: Static Type Checking</strong></p>
+          <pre><code>let num: number = "hello"; // Error: Type 'string' is not assignable to type 'number'
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> Assigning a string to a number-typed variable triggers a compile-time error, ensuring type safety before execution.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Type Annotations and any Type -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Type Annotations & any Type</h2>
+        <p>Type annotations specify variable types. The <code>any</code> type allows any value but risks errors.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>let x: number = 10;
+let y: string = "Hello";
+let z: boolean = true;
+let a: any = "Hello"; // any data type
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>x</code>, <code>y</code>, and <code>z</code> are strictly typed, while <code>a: any</code> allows any value, bypassing type safety.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Arrays and Multidimensional Arrays -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Arrays & Multidimensional Arrays</h2>
+        <p>Type annotations specify array element types. Multidimensional arrays support mixed types via unions.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>let arr: string[] = ["Ahmed", "Basant", "Ali", "Hoda"];
+let arr3: (string | number | boolean)[] = ["Ahmed", "Mona", 23, 14, true, false];
+let arr4: (string | number[] | boolean[])[] = ["Hazem", "Menna", [23, 132, 45, 54], [false, true]];
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>arr</code> is a string array, <code>arr3</code> allows mixed types, and <code>arr4</code> includes nested arrays.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

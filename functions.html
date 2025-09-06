@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeScript Study Guide - Functions</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="min-h-screen py-10 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto">
+    <header class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-gray-900">TypeScript Study Guide - Functions</h1>
+      <p class="text-lg text-gray-600 mt-2">Function-related TypeScript concepts</p>
+      <p class="text-sm text-gray-500">Last updated: September 6, 2025</p>
+    </header>
+    <nav class="nav-bar">
+      <a href="index.html">Basics</a>
+      <a href="functions.html">Functions</a>
+      <a href="types.html">Types</a>
+      <a href="objects-classes.html">Objects & Classes</a>
+      <a href="advanced.html">Advanced</a>
+    </nav>
+    <main>
+      <!-- Functions -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Functions</h2>
+        <p>Functions support typed parameters and return types, with compiler options for strictness.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>let showMsg = true;
+function showDetails(name: string, age: number, salary: number): string {
+    if (showMsg) {
+        return `My Name is ${name}, My Age is ${age} and My Salary is ${salary}`;
+    }
+    return 'Thanks';
+}
+console.log(showDetails('Ahmed', 23, 1000));
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> The function ensures type safety for parameters and return value. Compiler options like <code>noImplicitAny</code> enforce strict typing.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Default and Optional Parameters -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Default & Optional Parameters</h2>
+        <p>Default parameters provide fallback values; optional parameters are optional.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>function showDetails2(name: string, age: number = 20, salary?: number): string {
+    return `My Name is ${name}, My Age is ${age} and My Salary is ${salary}`;
+}
+console.log(showDetails2("Basant"));
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>age</code> defaults to 20, and <code>salary</code> is optional, allowing flexible function calls.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Rest Parameters -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Rest Parameters</h2>
+        <p>Rest parameters collect arguments into an array using <code>...</code>.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>function showDetails3(name: string, ...rest: number[]): string {
+    return `My Name is ${name}, My Age is ${rest[0]} and My Salary is ${rest[1]}`;
+}
+console.log(showDetails3("Basant", 23, 1000));
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>rest</code> collects numbers into an array, ensuring type safety.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Anonymous and Arrow Functions -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Anonymous & Arrow Functions</h2>
+        <p>Anonymous functions use function expressions; arrow functions use <code>=></code> for concise syntax.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>const showDetails4 = function(name: string) {
+    return `My Name is ${name}`;
+}
+console.log(showDetails4("Basant"));
+
+const showDetails5 = (name: string) => {
+    return `My Name is ${name}`;
+}
+console.log(showDetails5("Basant"));
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> Both functions return the same result, with arrow functions being more concise.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

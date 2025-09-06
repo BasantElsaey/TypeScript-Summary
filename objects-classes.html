@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeScript Study Guide - Objects & Classes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="min-h-screen py-10 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto">
+    <header class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-gray-900">TypeScript Study Guide - Objects & Classes</h1>
+      <p class="text-lg text-gray-600 mt-2">Object and class-related concepts in TypeScript</p>
+      <p class="text-sm text-gray-500">Last updated: September 6, 2025</p>
+    </header>
+    <nav class="nav-bar">
+      <a href="index.html">Basics</a>
+      <a href="functions.html">Functions</a>
+      <a href="types.html">Types</a>
+      <a href="objects-classes.html">Objects & Classes</a>
+      <a href="advanced.html">Advanced</a>
+    </nav>
+    <main>
+      <!-- Type Annotations with Objects -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Type Annotations with Objects</h2>
+        <p>Objects in type annotations are used to specify the shape of an object.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>let myObject: {
+    name: string,
+    id: number,
+    hire: boolean,
+    skills: string[],
+    sayHello: () => string
+}= {
+    name: "Basant Elsaey",
+    id: 12345,
+    hire: true,
+    skills: ["HTML", "CSS", "JavaScript", "TypeScript"],
+    sayHello: function(): string {
+        return `Hello ${this.name}`;
+    }
+};
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> The object’s shape is defined, ensuring type safety for properties and methods.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interfaces -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Interfaces</h2>
+        <p>Interfaces are used to specify the shape of an object, including methods and optional properties.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>interface User {
+    name: string,
+    id: number,
+    readonly country: string,
+    age?: number,
+    sayHello(): string,
+    getSalary(salary: number): number,
+    sayMsg: () => string
+}
+let user: User = {
+    name: "Basant",
+    id: 123,
+    country: "Egypt",
+    sayHello(): string {
+        return `Hello ${this.name}`;
+    },
+    getSalary(salary: number): number {
+        return salary;
+    },
+    sayMsg: () => {
+        return `Hello from Arrow Function`;
+    }
+};
+console.log(user.sayHello());
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>User</code> defines required and optional properties with type-safe methods.</p>
+          </div>
+        </div>
+        <div class="code-example">
+          <p><strong>Example: Reopen Interfaces</strong></p>
+          <pre><code>interface Settings {
+    theme: string,
+    fontSize: number,
+    showNotifications: boolean
+}
+interface Settings {
+    language: string,
+    autoSave: boolean
+}
+let userSettings: Settings = {
+    theme: "light",
+    fontSize: 20,
+    showNotifications: true,
+    language: "English",
+    autoSave: false
+};
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> Reopening <code>Settings</code> merges properties into a single interface.</p>
+          </div>
+        </div>
+        <div class="code-example">
+          <p><strong>Example: Extending Interfaces</strong></p>
+          <pre><code>interface Person {
+    name: string,
+    age?: number,
+    getInfo(): string
+}
+interface Employee {
+    getSalary(salary: number): number,
+    jobTitle: string
+}
+interface Developer extends Employee, Person {
+    level: string
+}
+let dev: Developer = {
+    name: "Nada",
+    getInfo(): string {
+        return `My Name is ${this.name}`;
+    },
+    getSalary(salary: number): number {
+        return salary;
+    },
+    jobTitle: "Frontend Developer",
+    level: "Junior"
+};
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>Developer</code> inherits from <code>Person</code> and <code>Employee</code>, adding <code>level</code>.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Classes -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Classes</h2>
+        <p>Classes are used to define objects with properties and methods.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>class User {
+    n: string;
+    s: number;
+    showInfo: () => string;
+    constructor(name: string, salary: number) {
+        this.n = name;
+        this.s = salary;
+        this.showInfo = function() {
+            return `My Name is ${this.n} and my Salary is ${this.s}`;
+        }
+    }
+    sayHello(): string {
+        return `Hello ${this.n}`;
+    }
+}
+let user = new User("Basant", 20000);
+console.log(user.n);
+console.log(user.s);
+console.log(user.showInfo());
+console.log(user.sayHello());
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> The <code>User</code> class defines properties and methods, instantiated with specific values.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Class Access Modifiers & Parameter Properties -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Class Access Modifiers & Parameter Properties</h2>
+        <p>Access modifiers control property access; parameter properties simplify constructor declarations.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>class User {
+    sayHello: () => string;
+    constructor(public name: string, private salary: number, protected readonly country: string) {
+        this.sayHello = function() {
+            return `Hello ${this.name}`;
+        }
+    }
+    showInfo(): string {
+        return `My Name is ${this.name}, My Salary is ${this.salary}, My Country is ${this.country}`;
+    }
+}
+let user = new User("Basant", 20000, "Egypt");
+console.log(user.name);
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> Parameter properties define <code>name</code>, <code>salary</code>, and <code>country</code> in the constructor.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Get and Set Accessors -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Getters & Setters</h2>
+        <p>Get and set accessors define custom getter and setter methods for a class property.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>class User {
+    sayHello: () => string;
+    constructor(private _username: string, protected salary: string) {
+        this.sayHello = function() {
+            return `Hello ${this._username}`;
+        }
+    }
+    basicInfo() {
+        return `My Username is ${this._username} and My Password is ${this.salary}`;
+    }
+    get username(): string {
+        return this._username;
+    }
+    set username(name: string) {
+        this._username = name;
+    }
+}
+let user = new User("Basant", "123");
+console.log(user.username);
+user.username = "Mona";
+console.log(user.username); // Mona
+console.log(user.sayHello()); // Hello Mona
+console.log(user.basicInfo()); // My Username is Mona and My Password is 123
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> Getters and setters control access to <code>_username</code>.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Static Members -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Static Members</h2>
+        <p>Static members are shared between all instances of a class.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>class User {
+    static created: number = 0;
+    static getCreated(): string {
+        return `Created ${this.created} Users`;
+    }
+    constructor(public username: string) {
+        User.created++;
+    }
+}
+let user = new User("Basant");
+let user1 = new User("Mohamed");
+let user2 = new User("Elsaey");
+console.log(user.username); // Basant
+console.log(User.created); // 3
+console.log(User.getCreated()); // Created 3 Users
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>created</code> and <code>getCreated</code> are static, shared across all <code>User</code> instances.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Abstract Classes -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Abstract Classes</h2>
+        <p>Abstract classes are used to define a blueprint for other classes and cannot be instantiated.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>abstract class User {
+    constructor(public username: string) {}
+    abstract saveUser(): void;
+    abstract sayHello(): string;
+}
+class Admin extends User {
+    constructor(username: string) {
+        super(username);
+    }
+    saveUser(): void {
+        console.log(`User Saved Successfully`);
+    }
+    sayHello(): string {
+        return `Hello Admin`;
+    }
+}
+let admin = new Admin("Basant");
+admin.saveUser();
+console.log(admin.sayHello()); // Hello Admin
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>User</code> defines abstract methods, which <code>Admin</code> implements.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Polymorphism & Method Overriding -->
+      <section class="section-card">
+        <h2 class="section-title text-2xl">Polymorphism & Method Overriding</h2>
+        <p>Polymorphism allows objects to take multiple forms; method overriding redefines a parent class method.</p>
+        <div class="code-example">
+          <p><strong>Example:</strong></p>
+          <pre><code>class Player {
+    constructor(public name: string) {}
+    attack(): void {
+        console.log("Attacking from Player");
+    }
+}
+class Amazon extends Player {
+    constructor(name: string, public spears: number) {
+        super(name);
+    }
+    override attack(): void {
+        console.log("Attacking from Amazon");
+        this.spears -= 1;
+    }
+}
+class Barbarian extends Player {
+    constructor(name: string, public axeDurability: number) {
+        super(name);
+    }
+    override attack(): void {
+        console.log("Attacking from AXE");
+        this.axeDurability -= 1;
+    }
+}
+let bar = new Barbarian("Barb", 100);
+let amazon = new Amazon("Amaz", 50);
+amazon.attack(); // Attacking from Amazon
+console.log(amazon.spears); // 49
+bar.attack(); // Attacking from AXE
+console.log(bar.axeDurability); // 99
+</code></pre>
+          <div class="example-explanation">
+            <p><strong>Explanation:</strong> <code>Amazon</code> and <code>Barbarian</code> override <code>attack</code>, demonstrating polymorphism.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
